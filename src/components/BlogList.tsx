@@ -1,11 +1,14 @@
 import { Button, Container, Chip, Typography, Grid, makeStyles } from '@material-ui/core'
 import profilePicture from '../assets/profilePicture.png'
+import { GetBlogs } from '../api/blog';
+import { useEffect, useState } from 'react';
+import { BlogSummary } from '../api/models/Blog';
 
 
 const useStyles = makeStyles(theme => ({
   container:{
     textAlign: "center",
-    padding: "1rem 5rem"
+    padding: "1rem 5rem 5rem 5rem"
   },
   blogImage:{
     height: "100%",
@@ -30,73 +33,21 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const blogs = [
-  {
-    name: 'The Art of Focus',
-    category: 'Productivity',
-    summary: "This is just a sample article that I'm testing out.This is just a sample article that I'm testing out. This is just a sample article that I'm testing out. This is just a sample article that I'm testing out"
-  },
-  {
-    name: 'How to become a Java Engineer in 2023',
-    category: 'Software - Java',
-    summary: "This is just a sample article that I'm testing out"
-  },
-  {
-    name: 'The Art of Focus',
-    category: 'Productivity',
-    summary: "This is just a sample article that I'm testing out"
-  },
-  {
-    name: 'How to become a Java Engineer in 2023',
-    category: 'Software - Java',
-    summary: "This is just a sample article that I'm testing out"
-  },
-  {
-    name: 'The Art of Focus',
-    category: 'Productivity',
-    summary: "This is just a sample article that I'm testing out"
-  },
-  {
-    name: 'How to become a Java Engineer in 2023',
-    category: 'Software - Java',
-    summary: "This is just a sample article that I'm testing out"
-  },
-  {
-    name: 'The Art of Focus',
-    category: 'Productivity',
-    summary: "This is just a sample article that I'm testing out"
-  },
-  {
-    name: 'How to become a Java Engineer in 2023',
-    category: 'Software - Java',
-    summary: "This is just a sample article that I'm testing out"
-  },
-  {
-    name: 'The Art of Focus',
-    category: 'Productivity',
-    summary: "This is just a sample article that I'm testing out"
-  },
-  {
-    name: 'How to become a Java Engineer in 2023',
-    category: 'Software - Java',
-    summary: "This is just a sample article that I'm testing out"
-  },
-  {
-    name: 'The Art of Focus',
-    category: 'Productivity',
-    summary: "This is just a sample article that I'm testing out"
-  },
-  {
-    name: 'How to become a Java Engineer in 2023',
-    category: 'Software - Java',
-    summary: "This is just a sample article that I'm testing out"
-  }
-]
-
 export interface IBlogListProps {}
 
 export default function BlogList (props: IBlogListProps) {
   
+  const [blogs, setBlogs] = useState<BlogSummary[]>();
+
+  async function initBlogs(){
+    const blogsResponse = await GetBlogs();
+    setBlogs(blogsResponse); 
+  }
+
+  useEffect(() => {
+    initBlogs();
+  }, []);
+
   const styles = useStyles();
 
   return (
@@ -106,7 +57,7 @@ export default function BlogList (props: IBlogListProps) {
       <br/>
       <Grid container spacing={3}>
       
-        {blogs.slice(0, 4).map(blog => (
+        {blogs?.slice(0, 6).map((blog:BlogSummary) => (
           <Grid item xs={12} sm={4}>
             <div className={styles.blogCards}>
               <div className={styles.blogImageContainer}>

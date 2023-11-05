@@ -38,7 +38,7 @@ export default function About (props: IAboutProps) {
   const styles = useStyles()
 
   return (
-    <div className={styles.container}>
+    <section className={styles.container} id="About">
       <Container>
         <Grid container>
           <Grid
@@ -70,6 +70,6 @@ export default function About (props: IAboutProps) {
           </Grid>
         </Grid>
       </Container>
-    </div>
+    </section>
   )
 }

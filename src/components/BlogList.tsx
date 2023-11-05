@@ -51,30 +51,32 @@ export default function BlogList (props: IBlogListProps) {
   const styles = useStyles();
 
   return (
-    <Container id='blog' className={styles.container}>
-      <h2>The Blog</h2>
-      <p>Deep dives on Software, productivity, health and human potential.</p>
-      <br/>
-      <Grid container spacing={3}>
-      
-        {blogs?.slice(0, 6).map((blog:BlogSummary) => (
-          <Grid item xs={12} sm={4}>
-            <div className={styles.blogCards}>
-              <div className={styles.blogImageContainer}>
-                <img className={styles.blogImage} src={profilePicture} />
+    <section id='Blog'>
+      <Container className={styles.container}>
+        <h2>The Blog</h2>
+        <p>Deep dives on Software, productivity, health and human potential.</p>
+        <br/>
+        <Grid container spacing={3}>
+        
+          {blogs?.slice(0, 6).map((blog:BlogSummary) => (
+            <Grid item xs={12} sm={4}>
+              <div className={styles.blogCards}>
+                <div className={styles.blogImageContainer}>
+                  <img className={styles.blogImage} src={profilePicture} />
+                </div>
+                <div className={styles.blogCardsInner}>
+                  <h4 className={styles.blodCardsInnerTitle}>{blog.name.toUpperCase()}</h4>
+                  <p>{blog.summary}</p>
+                  <br/>
+                  <a href=""><b>READ MORE...</b></a>
+                </div>
+                
               </div>
-              <div className={styles.blogCardsInner}>
-                <h4 className={styles.blodCardsInnerTitle}>{blog.name.toUpperCase()}</h4>
-                <p>{blog.summary}</p>
-                <br/>
-                <a href=""><b>READ MORE...</b></a>
-              </div>
-              
-            </div>
-          </Grid>
-        ))}
-      
-      </Grid>
-    </Container>
+            </Grid>
+          ))}
+        
+        </Grid>
+      </Container>
+    </section>
   )
 }

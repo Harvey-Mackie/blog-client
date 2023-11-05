@@ -1,7 +1,9 @@
-import { Container, makeStyles } from '@material-ui/core'
+import { Container, TextField, makeStyles } from '@material-ui/core'
+import { useState } from 'react';
 import {AiFillLinkedin, AiFillGithub, AiFillYoutube, AiFillMail} from 'react-icons/ai';
 import { Link } from 'react-router-dom';
-
+import { subscribe } from '../api/action';
+import { toast } from 'react-toastify';
 const useStyles = makeStyles(theme => ({
   container:{
     
@@ -31,8 +33,8 @@ const useStyles = makeStyles(theme => ({
       borderRadius: ".2rem"
     },
     "& input":{
-      padding: ".4rem",
-      borderRadius: ".2rem"
+      borderRadius: ".2rem",
+      backgroundColor: "white"
     }
   },
   footerContainer:{
@@ -50,13 +52,32 @@ export interface IFooterProps {}
 
 export default function Footer (props: IFooterProps) {
 
+  const [name, setName] = useState<String>("");
+  const [email, setEmail] = useState<String>("");
+
   const styles = useStyles();
+
+  async function callSubscribe(){
+    await subscribe(name, email)
+    setName("")
+    setEmail("")
+    toast.success('Thank you for subscribing!', {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  }
 
   return (
     <div className={styles.container}>
       <div className={styles.subscribeContainer}>
         <Container>
-          <div>
+          <div id="Subscribe">
             <h1>Subscribe to Weekly Snippets</h1>
             <p>
               Join a new community who are looking to <b>improve in all areas of
@@ -65,9 +86,9 @@ export default function Footer (props: IFooterProps) {
             </p>
           </div>
           <div className={styles.subscribeContainerForm}>
-            <input type='text' name='firstName' placeholder='First Name' />
-            <input type='email' name='email' placeholder='Email Address' />
-            <button type='button'>Subscribe</button>
+            <TextField value={name} type='text' label='First Name' variant="filled" onChange={e => setName(e.target.value)} />
+            <TextField value={email} type='email' label='Email Address' variant="filled" onChange={e => setEmail(e.target.value)}/>
+            <button type='button' onClick={callSubscribe}>Subscribe</button>
           </div>
         </Container>
       </div>

@@ -5,26 +5,30 @@ import {AiFillLinkedin, AiFillGithub, AiFillYoutube, AiFillMail} from 'react-ico
 
 const useStyles = makeStyles(theme => ({
   container: {
-    backgroundColor: '#d7d9ceff',
-    padding: '3rem'
+    backgroundColor: theme.palette.primary.main,
+    padding: '3rem',
+    color: theme.palette.primary.contrastText
   },
   profileImage: {
-    height: '15rem',
-    width: '13.2rem',
-    borderRadius: '60%'
+    height: '14rem',
   },
   profileImageContainer: {
     display: 'flex',
     flexDirection: "column",
+    justifyContent: "flex-end",
     padding: '2rem'
   },
   aboutContainer: {
     textAlign: 'left',
-    padding: '2rem'
+    padding: '2rem',
+    maxWidth: "80ch",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center"
   },
   iconContainer:{
-    padding: "2rem",
-    color: "#0c7489ff",
+    padding: "2rem 2rem 0 2rem",
+    color: theme.palette.primary.contrastText,
     display: "flex",
     justifyContent: "center",
     fontSize: "1.5rem",
@@ -44,7 +48,7 @@ export default function About (props: IAboutProps) {
           <Grid
             item
             xs={12}
-            sm={6}
+            sm={4}
             alignItems='center'
             justifyContent='center'
             className={styles.profileImageContainer}
@@ -60,11 +64,11 @@ export default function About (props: IAboutProps) {
           <Grid 
             item 
             xs={12} 
-            sm={6} 
+            sm={8} 
             className={styles.aboutContainer}
           >
               <h1>Hey, I'm Harvey.</h1>
-              <h3> I'm a Software Engineer who has a <mark>passion for achieving high performance</mark> in all areas of life. </h3>
+              <h3> I'm a Software Engineer who has a <b>passion for achieving high performance</b> in all areas of life. </h3>
               <p> My articles range from <b>Software Engineering</b> topics and practices to <b>Health</b> tips.</p>
               <p> I've been balancing triathlon and my career in Software for the past two years and have managed to achieve great things in both areas of my life - <b> sub 10 hour Ironman and Colleague of the Year at Lloyds - in the same year </b>.</p>
           </Grid>

@@ -4,17 +4,16 @@ import BlogList from '../components/BlogList'
 import Footer from '../components/Footer'
 import Navbar from '../components/Navbar'
 
-interface HomePageProps {}
+interface BlogOverviewPageProps {}
 
-const HomePage: FunctionComponent<HomePageProps> = () => {
+const BlogOverviewPage: FunctionComponent<BlogOverviewPageProps> = () => {
   return (
     <div>
       <Navbar/>
-      <About />
-      <BlogList isSummary/>
+      <BlogList isSummary={false} />
       <Footer />
     </div>
   )
 }
 
-export default HomePage
+export default BlogOverviewPage

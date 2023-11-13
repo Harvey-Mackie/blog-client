@@ -4,12 +4,15 @@ import {AiFillLinkedin, AiFillGithub, AiFillYoutube, AiFillMail} from 'react-ico
 import { Link } from 'react-router-dom';
 import { subscribe } from '../api/action';
 import { toast } from 'react-toastify';
+import { Formik, FormikHelpers } from 'formik';
+
 const useStyles = makeStyles(theme => ({
   container:{
     
   },
   subscribeContainer:{
-    backgroundColor: "#d7d9ceff",
+    backgroundColor: theme.palette.secondary.main,
+    color: theme.palette.secondary.contrastText,
     '& > div':{
       [theme.breakpoints.up('md')]: {
         display: "flex",
@@ -24,11 +27,12 @@ const useStyles = makeStyles(theme => ({
   subscribeContainerForm:{
     display: "flex",
     flexDirection: "column",
+    width: "30rem",
     padding: "1rem 1rem",
     gap: 15,
     "& button":{
       padding: ".5rem",
-      backgroundColor: "#119da4ff",
+      backgroundColor: theme.palette.secondary.contrastText,
       color: "white",
       borderRadius: ".2rem"
     },
@@ -57,7 +61,8 @@ export default function Footer (props: IFooterProps) {
 
   const styles = useStyles();
 
-  async function callSubscribe(){
+  async function callSubscribe(e: React.FormEvent<HTMLFormElement>){
+    e.preventDefault();
     await subscribe(name, email)
     setName("")
     setEmail("")
@@ -85,11 +90,20 @@ export default function Footer (props: IFooterProps) {
               to your inbox once per week.
             </p>
           </div>
-          <div className={styles.subscribeContainerForm}>
-            <TextField value={name} type='text' label='First Name' variant="filled" onChange={e => setName(e.target.value)} />
-            <TextField value={email} type='email' label='Email Address' variant="filled" onChange={e => setEmail(e.target.value)}/>
-            <button type='button' onClick={callSubscribe}>Subscribe</button>
-          </div>
+          <Formik 
+            initialValues={{ name: '', email: '' }}
+            validate={values => {} } 
+            onSubmit={(values, { setSubmitting }) => {
+              setTimeout(() => {
+                alert(JSON.stringify(values, null, 2));
+              }, 400);
+            }}            >
+            <form onSubmit={callSubscribe} className={styles.subscribeContainerForm}>
+              <TextField required value={name} type='text' label='First Name' variant="filled" onChange={e => setName(e.target.value)} />
+              <TextField required value={email} type='email' label='Email Address' variant="filled" onChange={e => setEmail(e.target.value)}/>
+              <button type='submit'>Subscribe</button>
+            </form>
+          </Formik>
         </Container>
       </div>
       <div className={styles.footerContainer}>

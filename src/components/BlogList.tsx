@@ -1,14 +1,15 @@
-import { Button, Container, Chip, Typography, Grid, makeStyles } from '@material-ui/core'
+import { Button, Container, Chip, Typography, Grid, makeStyles, Card, CardMedia, CardContent, CardActions } from '@material-ui/core'
 import profilePicture from '../assets/profilePicture.png'
 import { GetBlogs } from '../api/blog';
 import { useEffect, useState } from 'react';
 import { BlogSummary } from '../api/models/Blog';
+import { Link } from 'react-router-dom';
 
 
 const useStyles = makeStyles(theme => ({
   container:{
     textAlign: "center",
-    padding: "1rem 5rem 5rem 5rem"
+    padding: "1rem 5rem 2rem 5rem"
   },
   blogImage:{
     height: "100%",
@@ -33,15 +34,25 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-export interface IBlogListProps {}
+export interface IBlogListProps {
+  //when true, only display 6 elements and have an option to view the full list via navigating to correct page
+  isSummary: boolean; 
+}
 
 export default function BlogList (props: IBlogListProps) {
   
   const [blogs, setBlogs] = useState<BlogSummary[]>();
+  const [summaryBlogsToShow, setSummaryBlogsToShow] = useState<number>(6);
 
   async function initBlogs(){
     const blogsResponse = await GetBlogs();
     setBlogs(blogsResponse); 
+  }
+
+  function seeMore(){
+    if(blogs && summaryBlogsToShow < blogs?.length){
+      setSummaryBlogsToShow(summaryBlogsToShow + 6);
+    }
   }
 
   useEffect(() => {
@@ -49,6 +60,7 @@ export default function BlogList (props: IBlogListProps) {
   }, []);
 
   const styles = useStyles();
+  const blogsToRender = props.isSummary ? blogs?.slice(0,summaryBlogsToShow) : blogs;
 
   return (
     <section id='Blog'>
@@ -58,24 +70,41 @@ export default function BlogList (props: IBlogListProps) {
         <br/>
         <Grid container spacing={3}>
         
-          {blogs?.slice(0, 6).map((blog:BlogSummary) => (
+          {blogsToRender?.map((blog:BlogSummary) => (
             <Grid item xs={12} sm={4}>
-              <div className={styles.blogCards}>
-                <div className={styles.blogImageContainer}>
-                  <img className={styles.blogImage} src={profilePicture} />
-                </div>
-                <div className={styles.blogCardsInner}>
-                  <h4 className={styles.blodCardsInnerTitle}>{blog.name.toUpperCase()}</h4>
-                  <p>{blog.summary}</p>
-                  <br/>
-                  <a href=""><b>READ MORE...</b></a>
-                </div>
+              <Link to={`/${blog.id}`} style={{ textDecoration: 'none' }}>
+                <Card
+                  variant="outlined"
+                >
+                  {
+                    blog.image ? 
+                      <CardMedia
+                        component="img"
+                        height="240"
+                        image={blog.image + ''}
+                        alt="green iguana"
+                      />
+                    : <></>
+                  }
+                  <CardContent>
+                    <Typography gutterBottom variant="h5">{blog.name.toUpperCase()}</Typography>
+                    <Typography variant="body1">{blog.summary}</Typography>
+                  </CardContent>
+                </Card>
+              </Link>
                 
-              </div>
             </Grid>
           ))}
         
         </Grid>
+        {
+          props.isSummary && blogs && summaryBlogsToShow < blogs.length  ? 
+          <div  style={{display: "flex", justifyContent: "center", padding: "1rem"}}>
+            <Button onClick={seeMore} variant="outlined">See more</Button>
+          </div>
+          :
+          <></>
+        }
       </Container>
     </section>
   )

@@ -13,6 +13,8 @@
     "@types/node": "^16.18.59",
     "@types/react": "^18.2.33",
     "@types/react-dom": "^18.2.14",
+    "@uiw/react-md-editor": "^3.25.3",
+    "formik": "^2.4.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.11.0",
@@ -20,6 +22,7 @@
     "react-router-hash-link": "^2.4.3",
     "react-scripts": "5.0.1",
     "react-toastify": "^9.1.3",
+    "remarkable": "^2.0.1",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
   },
@@ -48,6 +51,7 @@
     ]
   },
   "devDependencies": {
-    "@types/react-router-hash-link": "^2.4.8"
+    "@types/react-router-hash-link": "^2.4.8",
+    "@types/remarkable": "^2.0.8"
   }
 }

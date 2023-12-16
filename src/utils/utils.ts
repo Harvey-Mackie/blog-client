@@ -14,3 +14,7 @@ const TOAST_OPTIONS = {
 export function successToast(message: string){
     return toast.success(message, TOAST_OPTIONS);
 }
+
+export function errorToast(message: string){
+    return toast.error(message, TOAST_OPTIONS);
+}

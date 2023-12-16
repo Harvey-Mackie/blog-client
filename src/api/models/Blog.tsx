@@ -1,14 +1,18 @@
 export interface BlogSummary{
-    id: String,
-    name: String,
-    category: String,
-    summary: String,
-    image: String
+    id: string,
+    name: string,
+    category: string,
+    summary: string,
+    image: string,
+    dateCreated: string
 }
 
 export interface BlogDetails{
-    id: String,
-    name: String,
-    category: String,
-    content: String
+    id: string,
+    name: string,
+    category: string,
+    content: string
+    dateCreated: string,
+    summary: string,
+    image: string
 }

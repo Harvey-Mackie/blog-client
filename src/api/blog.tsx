@@ -1,51 +1,33 @@
+import { HTTP_METHOD, fetching } from "./common";
+
 export async function GetBlogs(){
-    const url = buildApiUrl("")
-
-    const response = await fetch(url, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-    })
-
-    return response.json();
+    return await fetching("", HTTP_METHOD.GET, undefined, true, undefined);
 }
 
 export async function GetBlog(id:number){
-    const url = buildApiUrl(`${id}`)
-
-    const response = await fetch(url, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-    })
-
-    return response.json();
+    return await fetching(`${id}`, HTTP_METHOD.GET, undefined, true, undefined);
 }
 
 
 export async function addBlog(title?:string, summary?:string, image?: string, content?: string){
-    const url = buildApiUrl("")
-    const response = await fetch(url, {
-        method: "POST",
-        headers:{
-          'Content-Type': 'application/json',
-          'Accept': 'application/json, text/plain, */*'
-        },
-        body: JSON.stringify(
-            {
-              title: title,
-              summaryContent: summary,
-              summaryPicture: image,
-              articleContent: content,
-            }
-          )
-    })
+  const body = {
+    title: title,
+    summaryContent: summary,
+    summaryPicture: image,
+    articleContent: content,
+  };
 
-    return response;
+  return await fetching("", HTTP_METHOD.POST, body, true, 'Successfully Added Blog - Navigating Now');
 }
 
+export async function editBlog(id?:string, title?:string, summary?:string, image?: string, content?: string){
+  const body = {
+    id,
+    title: title,
+    summaryContent: summary,
+    summaryPicture: image,
+    articleContent: content,
+  };
 
-export const buildApiUrl = (path: string): string =>
-  `http://localhost:8080/${path}`;
+  return await fetching("", HTTP_METHOD.PUT, body, true, 'Successfully Updated Blog');
+}

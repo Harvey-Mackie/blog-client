@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { subscribe } from '../api/action';
 import { toast } from 'react-toastify';
 import { Formik, FormikHelpers } from 'formik';
+import { HttpResponse } from '../api/models/HttpResponse';
 
 const useStyles = makeStyles(theme => ({
   container:{
@@ -27,9 +28,13 @@ const useStyles = makeStyles(theme => ({
   subscribeContainerForm:{
     display: "flex",
     flexDirection: "column",
-    width: "30rem",
+    width: "45%",
     padding: "1rem 1rem",
     gap: 15,
+    [theme.breakpoints.down('md')]: {
+        width: "90%",
+    },
+
     "& button":{
       padding: ".5rem",
       backgroundColor: theme.palette.secondary.contrastText,
@@ -63,25 +68,19 @@ export default function Footer (props: IFooterProps) {
 
   async function callSubscribe(e: React.FormEvent<HTMLFormElement>){
     e.preventDefault();
-    await subscribe(name, email)
-    setName("")
-    setEmail("")
-    toast.success('Thank you for subscribing!', {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
+    const response = await subscribe(name, email) as boolean
+
+    if(response){
+      setName("")
+      setEmail("")
+    }
+    
   }
 
   return (
     <div className={styles.container}>
       <div className={styles.subscribeContainer}>
-        <Container>
+        <Container style={{width: "100%"}}>
           <div id="Subscribe">
             <h1>Subscribe to Weekly Snippets</h1>
             <p>

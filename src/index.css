@@ -11,3 +11,8 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+.w-md-editor-text-input {
+  -webkit-text-fill-color: black !important;
+}

@@ -1,16 +1,13 @@
+import { errorToast, successToast } from "../utils/utils";
+import { HTTP_METHOD, fetching } from "./common";
+import { HttpResponse } from "./models/HttpResponse";
+
 export async function subscribe(firstName:String, email:String){
-    const url = buildApiUrl("actions/subscribe")
-    const response = await fetch(url, {
-        method: "PUT",
-        headers:{
-          'Content-Type': 'application/json',
-          'Accept': 'application/json, text/plain, */*'
-        },
-        body: JSON.stringify({name: firstName, email: email})
-    })
-
-    return response;
+  return await fetching(
+    "actions/subscribe",
+    HTTP_METHOD.PUT,
+    {name: firstName, email: email},
+    true,
+    'Thank you for subscribing!'
+    )
 }
-
-export const buildApiUrl = (path: string): string =>
-  `http://localhost:8080/${path}`;

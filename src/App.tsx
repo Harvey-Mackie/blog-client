@@ -4,9 +4,13 @@ import HomePage from './pages/HomePage'
 import { ToastContainer} from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import BlogDetailsPage from './pages/BlogDetails';
-import BlogAddPage from './pages/BlogAddPage';
 import { ThemeProvider, createTheme } from '@material-ui/core';
 import BlogOverviewPage from './pages/BlogOverview';
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
+import AdminPage from './pages/admin/AdminPage';
+import AdminBlogAddPage from './pages/admin/AdminBlogAddPage';
+import AdminBlogEditPage from './pages/admin/AdminBlogEditPage';
 
 const theme = createTheme({
   palette: {
@@ -40,12 +44,33 @@ function App () {
     <div className='App'>
       <ThemeProvider theme={theme}>
         <Router>
-          <Routes>
-              <Route path='/' element={<HomePage />} />
-              <Route path='/blog' element={<BlogOverviewPage />} />
-              <Route path='/blog/:blogId' element={<BlogDetailsPage/>} />
-              <Route path='/admin/add' element={<BlogAddPage/>} />
-          </Routes>
+          <body style={{
+            display: "flex",
+            flexDirection: "column",
+            minHeight: "100vh",
+            justifyContent: "space-between"
+          }}>
+            <div>
+              <header>
+                <Navbar/>
+              </header>
+              
+              <main>
+                <Routes>
+                    <Route path='/' element={<HomePage />} />
+                    <Route path='/blog' element={<BlogOverviewPage />} />
+                    <Route path='/blog/:blogId' element={<BlogDetailsPage/>} />
+                    <Route path='/admin' element={<AdminPage/>} />
+                    <Route path='/admin/add' element={<AdminBlogAddPage/>} />
+                    <Route path='/admin/edit/:blogId' element={<AdminBlogEditPage/>} />
+                </Routes>
+              </main>
+            </div>
+            <footer>
+              <Footer />
+            </footer>
+          </body>
+
         </Router>
       </ThemeProvider>
       <ToastContainer />
